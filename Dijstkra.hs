@@ -82,7 +82,7 @@ nodesOf graph = Map.keys graph
 addEdge :: (Node, Node, Distance) -> Graph -> Graph
 addEdge (a, b, w) = add a b w . add b a w
   where
-    add a b w set = let edges = fromJust $ Map.lookup a set in Map.insert a ((b, w) : edges) set
+    add a b w graph = let edges = fromJust $ Map.lookup a graph in Map.insert a ((b, w) : edges) graph
 
 -- create symmetric edge, undirected graph
 addEdge' :: Graph -> (Node, Node, Distance) -> Graph
