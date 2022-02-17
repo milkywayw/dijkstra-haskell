@@ -119,7 +119,7 @@ dijkstra graph target (visitedNodes, pq, prev)
     -- we've exhausted the search along the nodes we can reach when this is true
     emptyPrioQueue = Set.null pq
 
-    -- greedy: find the node with the closest tentative distance, and finalize/remove it
+    -- greedy: find the edge leading to the tentatively closest node, and remove it
     ((distance, (nearestNode, maybePrevNode)), nextPq) = Set.deleteFindMin pq
     updatedVisitedNodes = Set.insert nearestNode visitedNodes
 
@@ -134,6 +134,6 @@ dijkstra graph target (visitedNodes, pq, prev)
     -- if the nearest node is the target node, then we're done. the path is encoded in the PreviousMap
     reachedTarget = nearestNode == target
 
-    -- otherwise, keep searching. we will now consider unfinalized neighbors of our current node
+    -- otherwise, keep searching. add all outgoing edges from current node into priority queue
     neighbors = (Map.!) graph nearestNode
     neighborPq = foldr (\(toNode, w) -> Set.insert (distance + w, (toNode, Just nearestNode))) nextPq neighbors
